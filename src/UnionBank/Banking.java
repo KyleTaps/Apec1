@@ -13,7 +13,8 @@ public class Banking {
         System.out.println("2. Doctors Appointment");
         System.out.println("3. Shopping");
         
-        bankingClass bApp[] = new bankingClass[10];
+        BankingClass bApp[] = new BankingClass[10];
+        int accountCount = 0;
         
         System.out.print("Enter choice: ");
         int choice = sc.nextInt();
@@ -29,46 +30,53 @@ public class Banking {
                 
                 switch(action){
                     case 1:
-                        bApp[0] = new bankingClass();
-                        System.out.print("Enter Account No.: ");
-                        bApp[0].setAccountNo(sc.nextInt());
-                        System.out.print("Enter Account Pin: ");
-                        bApp[0].setPin(sc.nextInt());
-                        break;
+                                if (accountCount < bApp.length) {
+                                bApp[accountCount] = new BankingClass();
+                                System.out.print("Enter Account No.: ");
+                                bApp[accountCount].setAccountNo(sc.nextInt());
+                                System.out.print("Enter Account Pin: ");
+                                bApp[accountCount].setPin(sc.nextInt());
+                                System.out.println("Account registered successfully!");
+                                accountCount++;
+                            } else {
+                                System.out.println("Error!");
+                            }
+                            break;
                     case 2:
                         int attempts = 3;
-                        bankingClass bc = new bankingClass();
+                        boolean loginSuccess = false;
+                        BankingClass bc = new BankingClass();
 
-                        System.out.print("Enter your Account No: ");
-                        int accountNo = sc.nextInt();
-
-                        System.out.print("Enter your Pin: ");
-                        int pin = sc.nextInt();
-
-                        while(!(bc.verifyAccount(accountNo, pin))){
-                            if(attempts == 1){
-                                System.out.println("ATTEMPT LIMIT REACHED!");
-                                System.exit(0);
+                        while(attempts > 0 && !loginSuccess) {
+                                System.out.print("Enter your Account No: ");
+                                int accountNo = sc.nextInt();
+                                System.out.print("Enter your Pin: ");
+                                int pin = sc.nextInt();
+                                
+                                for (int i = 0; i < accountCount; i++) {
+                                    if (!bApp[i].verifyAccount(accountNo, pin)) {
+                                    } else {
+                                        System.out.println("You have Successfully Log in");
+                                        loginSuccess = true;
+                                        break;
+                                    }
+                                }
+                                
+                                if (!loginSuccess) {
+                                    attempts--;
+                                    System.out.println("INVALID ACCOUNT! Attempt Left: " + attempts);
+                                    if(attempts == 0) {
+                                        System.out.println("ATTEMPT LIMIT REACHED!");
+                                        System.exit(0);
+                                    }
+                                }
                             }
-
-                            attempts--;
-                            System.out.println("Attempt Left: "+attempts);
-
-                            System.out.println("INVALID ACCOUNT!");
-                            System.out.print("Enter your Account No: ");
-                            accountNo = sc.nextInt();
-                            System.out.print("Enter your Pin: ");
-                            pin = sc.nextInt();
-
-                        }
-                        
-                
-                    break;
+                            break;
                     case 3:
                         break;
                 
                 }
-                  System.out.print("Do you want to continue? (1/0):");
+                  System.out.print("Do you want to continue? (Yes-1/No-0):");
                   resp = sc.nextInt();
               }while(resp == 1);
                 
@@ -85,5 +93,4 @@ public class Banking {
         }
             
     }
-    
-}
+}    

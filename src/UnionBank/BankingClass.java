@@ -2,7 +2,7 @@ package UnionBank;
 
 import java.util.Scanner;
 
-public class bankingClass {
+public class BankingClass {
     
     private int accountNo;
     private float initialBalance;
@@ -24,21 +24,10 @@ public class bankingClass {
         return pin;
     }
     
-   
-    
-    
-    
-    
-    
-    
     
     public boolean verifyAccount(int acc, int pn){
         
-            if(acc == accountNo && pn == pin){
-                return true;
-            }else{
-                return false;
-            }
+        return acc == accountNo && pn == pin;
     }
     
     public int setAccount(){
